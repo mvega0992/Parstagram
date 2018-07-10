@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-        animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(5000);
-        animationDrawable.setExitFadeDuration(2000);
+//        animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+//        animationDrawable.setEnterFadeDuration(2000);
+//        animationDrawable.setExitFadeDuration(5000);
 
         usernameInput = findViewById(R.id.username_et);
         passwordInput = findViewById(R.id.password_et);

@@ -4,5 +4,5 @@
     android:color="@color/transparent" >
     <stroke
         android:width="2dp"
-        android:color="#40FFFFFF" />
+        android:color="@color/polling_result_unhighlighted_option_text_color" />
 </shape>
