@@ -1,7 +1,9 @@
 package me.mvega.parstagram;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +35,10 @@ public class HomeActivity extends AppCompatActivity {
         descriptionInput = findViewById(R.id.description_et);
         createButton = findViewById(R.id.create_btn);
         refreshButton = findViewById(R.id.refresh_btn);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,5 +107,12 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void logOut(View view) {
+        ParseUser.logOut();
+        Log.d("HomeActivity", "Log out successful!");
+        startActivity(new Intent(HomeActivity.this, MainActivity.class));
+        finish();
     }
 }
