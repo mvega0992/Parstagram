@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
 
-            int mainView = R.layout.activity_login; // R.layout.activity_main for colorful background
+            int mainView = R.layout.activity_login; // R.layout.activity_login_colorful for colorful background
             setContentView(mainView);
 
             relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 } else {
                     Log.e("LogInActivity", "Login Failure.");
-                    Toast.makeText(LoginActivity.this, "Incorrect Username and/or Password.", Toast.LENGTH_LONG);
+                    Toast.makeText(LoginActivity.this, "Incorrect Username and/or Password.", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }

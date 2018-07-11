@@ -1,6 +1,7 @@
 package me.mvega.parstagram;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -24,17 +25,24 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signUpBtn;
     private TextView tvLogin;
     TextInputLayout textInputLayout;
+
+    AnimationDrawable animationDrawable;
     RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int mainView = R.layout.activity_sign_up;
-
+        int mainView = R.layout.activity_sign_up; // TODO R.layout.activity_sign_up_colorful for colorful background
         setContentView(mainView);
 
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+
+//        if (mainView == R.layout.activity_sign_up_colorful) {
+//            animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+//            animationDrawable.setEnterFadeDuration(2000);
+//            animationDrawable.setExitFadeDuration(5000);
+//        }
 
         usernameInput = findViewById(R.id.username_et);
         passwordInput = findViewById(R.id.password_et);
@@ -68,6 +76,22 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (animationDrawable != null && !animationDrawable.isRunning()) {
+//            animationDrawable.start();
+//        }
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (animationDrawable != null && !animationDrawable.isRunning()) {
+//            animationDrawable.stop();
+//        }
+//    }
 
     private void signUp(String username, String password, String email, String handle) {
         // Create the ParseUser
