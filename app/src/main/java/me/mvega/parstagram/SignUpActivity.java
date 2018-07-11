@@ -24,25 +24,17 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signUpBtn;
     private TextView tvLogin;
     TextInputLayout textInputLayout;
-
-//    AnimationDrawable animationDrawable;
     RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int mainView = R.layout.activity_sign_up; // TODO R.layout.activity_sign_up_colorful for colorful background
+        int mainView = R.layout.activity_sign_up;
 
         setContentView(mainView);
 
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-
-//        if (mainView == R.layout.activity_main) {
-//            animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-//            animationDrawable.setEnterFadeDuration(2000);
-//            animationDrawable.setExitFadeDuration(5000);
-//        }
 
         usernameInput = findViewById(R.id.username_et);
         passwordInput = findViewById(R.id.password_et);
@@ -70,28 +62,12 @@ public class SignUpActivity extends AppCompatActivity {
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                final Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if (animationDrawable != null && !animationDrawable.isRunning()) {
-//            animationDrawable.start();
-//        }
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        if (animationDrawable != null && !animationDrawable.isRunning()) {
-//            animationDrawable.stop();
-//        }
-//    }
 
     private void signUp(String username, String password, String email, String handle) {
         // Create the ParseUser
@@ -107,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d("SignUpActivity", "Sign Up successful!");
-                    final Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                    final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
