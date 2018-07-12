@@ -6,31 +6,36 @@
 
 
     <ImageView
-        android:id="@+id/ivPicture"
+        android:id="@+id/ivPreview"
         android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        app:srcCompat="@android:color/black" />
+        android:layout_marginTop="50dp"
+        android:src="@drawable/image_placeholder" />
 
     <EditText
         android:id="@+id/etCaption"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivPicture"
+        android:layout_below="@+id/ivPreview"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_border"
+        android:padding="5dp"
         android:ems="10"
-        android:inputType="textMultiLine" />
+        android:hint="Insert a caption"
+        android:maxHeight="120dp"
+        android:inputType="textMultiLine"/>
 
     <Button
         android:id="@+id/btnPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/etCaption"
+        style="@style/Button"
         android:text="Post" />
 
 </RelativeLayout>

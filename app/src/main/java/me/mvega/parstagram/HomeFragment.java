@@ -22,4 +22,10 @@ public class HomeFragment extends Fragment {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
     }
+
+    public static HomeFragment newInstance() {
+        HomeFragment fragmentHome = new HomeFragment();
+        fragmentHome.setArguments(new Bundle());
+        return fragmentHome;
+    }
 }

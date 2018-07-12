@@ -21,5 +21,12 @@ public class CameraFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+
+    }
+
+    public static CameraFragment newInstance() {
+        CameraFragment fragmentCamera = new CameraFragment();
+        fragmentCamera.setArguments(new Bundle());
+        return fragmentCamera;
     }
 }

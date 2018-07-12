@@ -14,13 +14,15 @@
 
     <View style="@style/Divider"
         android:id="@+id/divider"
-        android:layout_above="@id/toolbar"/>
+        android:layout_above="@id/toolbar"
+        android:layout_marginBottom="10dp"/>
 
 
-    <include layout="@layout/toolbar"
+    <android.support.design.widget.BottomNavigationView
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/menu_navigation" />
 
 </RelativeLayout>
