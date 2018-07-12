@@ -20,25 +20,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
 import java.io.File;
-import java.util.List;
 
-import me.mvega.parstagram.model.Post;
-
-public class MainActivity extends AppCompatActivity implements ProfileFragment.OnItemSelectedListener {
-
-    private static final String imagePath = "/sdcard/DCIM/Camera/IMG_20180708_151117.jpg";
+public class MainActivity extends AppCompatActivity
+        implements ProfileFragment.OnItemSelectedListener,
+                    CameraFragment.OnItemSelectedListener {
 
     private HomeFragment home = HomeFragment.newInstance();
     private CameraFragment camera = CameraFragment.newInstance();
     private ProfileFragment profile = ProfileFragment.newInstance();
     final FragmentManager fragmentManager = getSupportFragmentManager();
+    BottomNavigationView bottomNavigationView;
     FragmentTransaction fragmentTransaction;
     FrameLayout frameLayout;
 
@@ -54,8 +46,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
 
         frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
 
+        showHome();
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.toolbar);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.toolbar);
         // handle navigation selection
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,77 +68,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
                         return false;
                     }
                 });
-
-
-//        createButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final String description = descriptionInput.getText().toString();
-//                final ParseUser user = ParseUser.getCurrentUser();
-//
-//                final File file = new File(imagePath);
-//                final ParseFile parseFile = new ParseFile(file);
-//                parseFile.saveInBackground(new SaveCallback() {
-//                    @Override
-//                    public void done(ParseException e) {
-//                        if (e == null) {
-//                            createPost(description, parseFile, user);
-//                        }
-//                        else {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//
-//        refreshButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadTopPosts();
-//            }
-//        });
-
-
-    }
-
-    private void createPost(String description, ParseFile imageFile, ParseUser user) {
-        final Post post = new Post();
-        post.setDescription(description);
-        post.setImage(imageFile);
-        post.setUser(user);
-
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("MainActivity", "Create post success!");
-                } else {
-                    Log.e("MainActivity", "Create post FAILED!");
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void loadTopPosts() {
-        final Post.Query postQuery = new Post.Query();
-        postQuery.getTop().withUser();
-
-        postQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> objects, ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < objects.size(); ++i) {
-                        Log.d("MainActivity", "Post[" + i + "] = "
-                                + objects.get(i).getDescription()
-                                + "\nusername = " + objects.get(i).getUser().getUsername());
-                    }
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     public void showProfile() {
@@ -229,5 +151,12 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.O
     public void onLogOutSelected() {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
+    }
+
+    @Override
+    public void onPostSelected() {
+        home = HomeFragment.newInstance();
+        replaceFragment(home);
+        bottomNavigationView.setSelectedItemId(R.id.button_home);
     }
 }
