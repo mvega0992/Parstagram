@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingTop="20dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
+    android:padding="20dp"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <TextView
@@ -11,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
         android:text="USERNAME" />
 
     <TextView
@@ -23,26 +22,23 @@
 
     <ImageView
         android:id="@+id/ivPost"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_below="@id/tvUsername"
-        android:src="@drawable/image_placeholder" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/image_placeholder"
+        android:adjustViewBounds="true"
+        />
 
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/tvCaption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ivPost"
         android:text="CAPTION" />
-
-    <View style="@style/Divider"
-        android:id="@+id/divider"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/tvCaption" />
 
 </RelativeLayout>

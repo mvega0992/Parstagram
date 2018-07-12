@@ -26,7 +26,9 @@
         android:ems="10"
         android:hint="Insert a caption"
         android:maxHeight="120dp"
-        android:inputType="textMultiLine"/>
+        android:inputType="textMultiLine"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@null" />
 
     <Button
         android:id="@+id/btnPost"

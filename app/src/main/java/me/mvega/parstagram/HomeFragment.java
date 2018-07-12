@@ -3,6 +3,7 @@ package me.mvega.parstagram;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -52,6 +53,9 @@ public class HomeFragment extends Fragment {
         rvPosts.setLayoutManager(linearLayoutManager);
         //set the adapter
         rvPosts.setAdapter(postAdapter);
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        rvPosts.addItemDecoration(itemDecoration);
 
         loadTopPosts();
 
