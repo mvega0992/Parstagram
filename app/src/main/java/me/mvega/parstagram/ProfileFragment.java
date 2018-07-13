@@ -8,14 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 public class ProfileFragment extends Fragment {
 
     private OnItemSelectedListener listener;
+
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -33,6 +38,19 @@ public class ProfileFragment extends Fragment {
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
 
         Button btnLogOut = (Button) view.findViewById(R.id.btnLogOut);
+        ImageView ivProfile = (ImageView) view.findViewById(R.id.ivProfile);
+        TextView tvUsername = (TextView) view.findViewById(R.id.tvUsername);
+
+        ParseUser user = ParseUser.getCurrentUser();
+
+        tvUsername.setText(user.getUsername());
+
+        ParseFile profileImage = user.getParseFile("image");
+        if(profileImage != null) {
+            String imageUrl = profileImage.getUrl();
+            Glide.with(getContext()).load(imageUrl).into(ivProfile);
+        } else ivProfile.setImageResource(R.drawable.profile_image);
+
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

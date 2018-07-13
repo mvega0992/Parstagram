@@ -55,10 +55,12 @@
 
         <ImageView
             android:id="@+id/ivProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/btnBack"
+            android:adjustViewBounds="false"
+            android:layout_below="@id/btnBack"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/new_profile_image" />
 
         <ImageButton

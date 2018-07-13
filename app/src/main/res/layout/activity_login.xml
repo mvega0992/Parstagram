@@ -87,7 +87,10 @@
         android:layout_marginTop="100dp"
         android:layout_marginBottom="50dp"/>
 
+
+
     <View style="@style/Divider"
+        android:id="@+id/divider"
         android:layout_above="@id/layoutSignUp"/>
 
     <include layout="@layout/item_sign_up"

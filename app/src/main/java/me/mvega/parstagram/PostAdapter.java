@@ -20,7 +20,7 @@ import java.util.List;
 
 import me.mvega.parstagram.model.Post;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private AdapterListener listener;
     private List<Post> mPosts;
@@ -57,14 +57,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
         Log.d("PostAdapter", Boolean.toString(post != null));
         ParseFile picture = post.getImage();
-        if(picture != null) {
+        if (picture != null) {
             String imageUrl = picture.getUrl();
             Glide.with(context).load(imageUrl).into(holder.ivPost);
         } else holder.ivPost.setImageResource(R.drawable.image_placeholder);
 
         Log.d("PostAdapter", Boolean.toString(user != null));
         ParseFile profileImage = user.getParseFile("image");
-        if(profileImage != null) {
+        if (profileImage != null) {
             String imageUrl = profileImage.getUrl();
             Glide.with(context).load(imageUrl).into(holder.ivProfile);
         } else holder.ivProfile.setImageResource(R.drawable.profile_image);
@@ -76,7 +76,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        public ImageView ivProfileImage;
+        //        public ImageView ivProfileImage;
         public ImageView ivPost;
         public TextView tvUsername;
         public TextView tvCaption;
