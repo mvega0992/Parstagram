@@ -121,7 +121,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/new_profile_image"
+        android:background="@drawable/profile_image"
         android:scaleType="fitCenter" />
 
     <View style="@style/Divider"

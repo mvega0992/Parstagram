@@ -1,5 +1,6 @@
 package me.mvega.parstagram;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,12 +16,13 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import me.mvega.parstagram.model.Post;
 
 public class HomeFragment extends Fragment {
+
+    private HomeFragmentListener listener;
 
     PostAdapter postAdapter;
     ArrayList<Post> posts;
@@ -53,6 +55,12 @@ public class HomeFragment extends Fragment {
         rvPosts.setLayoutManager(linearLayoutManager);
         //set the adapter
         rvPosts.setAdapter(postAdapter);
+        postAdapter.setListener(new PostAdapter.AdapterListener() {
+            public void sendPostToHomeFragment(Post post) {
+                listener.sendPostToMainActivity(post);
+            }
+        });
+
         RecyclerView.ItemDecoration itemDecoration = new
                 DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         rvPosts.addItemDecoration(itemDecoration);
@@ -86,7 +94,7 @@ public class HomeFragment extends Fragment {
 
     private void loadTopPosts() {
         final Post.Query postQuery = new Post.Query();
-        postQuery.getTop().withUser();
+        postQuery.getTop().withUser().newestFirst();
 
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
@@ -98,7 +106,6 @@ public class HomeFragment extends Fragment {
                                 + "\nusername = " + newPosts.get(i).getUser().getUsername());
 
                     }
-                    Collections.reverse(newPosts);
                     // Remember to CLEAR OUT old items before appending in the new ones
                     postAdapter.clear();
                     // ...the data has come back, add new items to your adapter...
@@ -111,5 +118,22 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+    }
+
+
+
+    public interface HomeFragmentListener {
+        void sendPostToMainActivity(Post post);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof HomeFragmentListener) {
+            listener = (HomeFragmentListener) context;
+        } else {
+            throw new ClassCastException(context.toString()
+                    + " must implement HomeFragment.HomeFragmentListener");
+        }
     }
 }

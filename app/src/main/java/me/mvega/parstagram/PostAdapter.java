@@ -2,6 +2,8 @@ package me.mvega.parstagram;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,15 @@ import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import me.mvega.parstagram.model.Post;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
+    private AdapterListener listener;
     private List<Post> mPosts;
     Context context;
 
@@ -45,15 +50,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
         // populate the view according to this data
         holder.tvUsername.setText(user.getUsername());
-        holder.tvCaption.setText(post.getDescription());
-        holder.tvTimestamp.setText(post.getTimestamp().toString());
-        post.getImage();
+        holder.tvCaption.setText(Html.fromHtml("<b>" + user.getUsername() + "</b> " + post.getDescription()));
+        Date createdAt = post.getTimestamp();
+        SimpleDateFormat df = new SimpleDateFormat("MMMM d");
+        holder.tvTimestamp.setText(df.format(createdAt));
 
-        ParseFile thumbnail = post.getParseFile("image");
-        if(thumbnail != null) {
-            String imageUrl = thumbnail.getUrl();
+        ParseFile picture = post.getImage();
+        if(picture != null) {
+            String imageUrl = picture.getUrl();
             Glide.with(context).load(imageUrl).into(holder.ivPost);
         } else holder.ivPost.setImageResource(R.drawable.image_placeholder);
+
+        ParseFile profileImage = user.getParseFile("profileImage");
+        if(profileImage != null) {
+            String imageUrl = profileImage.getUrl();
+            Glide.with(context).load(imageUrl).into(holder.ivProfile);
+        } else holder.ivProfile.setImageResource(R.drawable.profile_image);
     }
 
     @Override
@@ -67,6 +79,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         public TextView tvUsername;
         public TextView tvCaption;
         public TextView tvTimestamp;
+        public ImageView ivProfile;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,30 +89,36 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvCaption = (TextView) itemView.findViewById(R.id.tvCaption);
             tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
+            ivProfile = (ImageView) itemView.findViewById(R.id.ivProfile);
 
             // add this as the itemView's OnClickListener
             itemView.setOnClickListener(this);
         }
 
-        // when the user clicks on a row, show DetailsActivity for the selected post
+        // when the user clicks on a row, show DetailsFragment for the selected post
         @Override
         public void onClick(View v) {
             // gets item position
             int position = getAdapterPosition();
             // make sure the position is valid, i.e. actually exists in the view
             if (position != RecyclerView.NO_POSITION) {
-                // get the movie at the position, this won't work if the class is static
+                // get the post at the position, this won't work if the class is static
                 Post post = mPosts.get(position);
 
-                // TODO Post Details Fragment
-//                // create intent for the new activity
-//                Intent intent = new Intent(context, DetailsActivity.class);
-//                // serialize the movie using parceler, use its short name as a key
-//                intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
-//                // show the activity
-//                context.startActivity(intent);
+                Log.d("PostAdapter", "Post for Details fragment obtained.");
+
+                listener.sendPostToHomeFragment(post);
             }
         }
+    }
+
+    // set the listener. Must be called from the fragment
+    public void setListener(AdapterListener listener) {
+        this.listener = listener;
+    }
+
+    public interface AdapterListener {
+        void sendPostToHomeFragment(Post post);
     }
 
     // Clean all elements of the recycler

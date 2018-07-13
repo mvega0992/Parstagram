@@ -45,6 +45,11 @@ public class Post extends ParseObject {
             super(Post.class);
         }
 
+        public Query newestFirst() {
+            orderByDescending("createdAt");
+            return this;
+        }
+
         public Query getTop() {
             setLimit(20);
             return this;

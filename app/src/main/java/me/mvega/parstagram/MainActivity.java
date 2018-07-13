@@ -22,13 +22,19 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import me.mvega.parstagram.model.Post;
+
 public class MainActivity extends AppCompatActivity
         implements ProfileFragment.OnItemSelectedListener,
-                    CameraFragment.OnItemSelectedListener {
+        CameraFragment.OnItemSelectedListener,
+        HomeFragment.HomeFragmentListener,
+        DetailsFragment.OnItemSelectedListener {
 
     private HomeFragment home = HomeFragment.newInstance();
     private CameraFragment camera = CameraFragment.newInstance();
     private ProfileFragment profile = ProfileFragment.newInstance();
+    private DetailsFragment details = DetailsFragment.newInstance();
+
     final FragmentManager fragmentManager = getSupportFragmentManager();
     BottomNavigationView bottomNavigationView;
     FragmentTransaction fragmentTransaction;
@@ -114,7 +120,7 @@ public class MainActivity extends AppCompatActivity
         File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
 
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d(APP_TAG, "failed to create directory");
         }
 
@@ -158,5 +164,15 @@ public class MainActivity extends AppCompatActivity
         home = HomeFragment.newInstance();
         replaceFragment(home);
         bottomNavigationView.setSelectedItemId(R.id.button_home);
+    }
+
+    public void sendPostToMainActivity(Post post) {
+        details = DetailsFragment.newInstance();
+        details.post = post;
+        replaceFragment(details);
+    }
+
+    public void onBackSelected() {
+        replaceFragment(home);
     }
 }
