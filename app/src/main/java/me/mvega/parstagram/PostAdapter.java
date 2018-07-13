@@ -55,13 +55,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         SimpleDateFormat df = new SimpleDateFormat("MMMM d");
         holder.tvTimestamp.setText(df.format(createdAt));
 
+        Log.d("PostAdapter", Boolean.toString(post != null));
         ParseFile picture = post.getImage();
         if(picture != null) {
             String imageUrl = picture.getUrl();
             Glide.with(context).load(imageUrl).into(holder.ivPost);
         } else holder.ivPost.setImageResource(R.drawable.image_placeholder);
 
-        ParseFile profileImage = user.getParseFile("profileImage");
+        Log.d("PostAdapter", Boolean.toString(user != null));
+        ParseFile profileImage = user.getParseFile("image");
         if(profileImage != null) {
             String imageUrl = profileImage.getUrl();
             Glide.with(context).load(imageUrl).into(holder.ivProfile);

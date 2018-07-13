@@ -68,7 +68,7 @@ public class DetailsFragment extends Fragment {
             Glide.with(getContext()).load(imageUrl).into(ivPost);
         } else ivPost.setImageResource(R.drawable.image_placeholder);
 
-        ParseFile profileImage = user.getParseFile("profileImage");
+        ParseFile profileImage = user.getParseFile("image");
         if(profileImage != null) {
             String imageUrl = profileImage.getUrl();
             Glide.with(getContext()).load(imageUrl).into(ivProfile);
