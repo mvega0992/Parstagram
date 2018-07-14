@@ -70,7 +70,6 @@ public class CameraFragment extends Fragment {
                         if (e == null) {
                             Log.d("MainActivity", "Create post success!");
                             listener.onPostSelected();
-
                         } else {
                             Log.e("MainActivity", "Create post FAILED!");
                             e.printStackTrace();

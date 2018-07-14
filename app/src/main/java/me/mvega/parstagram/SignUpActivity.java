@@ -125,7 +125,40 @@ public class SignUpActivity extends AppCompatActivity {
         user.setEmail(email);
         // Set custom properties
         user.put("handle", handle);
-        user.put("image", image);
+
+        if (image != null) {
+            user.put("image", image);
+            user.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("SignUpActivity", "User save successful!");
+                    } else {
+                        Log.e("SignUpActivity", "User save failed.");
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } else {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profile_image);
+            //Convert bitmap to byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            byte[] bitmapData = bos.toByteArray();
+            image = new ParseFile("profile.jpg", bitmapData);
+            user.put("image", image);
+            user.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("SignUpActivity", "User save successful!");
+                    } else {
+                        Log.e("SignUpActivity", "User save failed.");
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
         // Invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {

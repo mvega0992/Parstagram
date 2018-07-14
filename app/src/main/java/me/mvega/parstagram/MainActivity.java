@@ -218,8 +218,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPostSelected() {
-        home = HomeFragment.newInstance();
-        replaceFragment(home);
+        showHome();
         bottomNavigationView.setSelectedItemId(R.id.button_home);
     }
 
