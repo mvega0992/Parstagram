@@ -20,7 +20,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import me.mvega.parstagram.model.Post;
 
@@ -39,6 +48,8 @@ public class MainActivity extends AppCompatActivity
     BottomNavigationView bottomNavigationView;
     FragmentTransaction fragmentTransaction;
     FrameLayout frameLayout;
+
+    ParseUser user = ParseUser.getCurrentUser();
 
     public final String APP_TAG = "Parstagram";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -144,6 +155,52 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+        if (requestCode == PICK_IMAGE) {
+            try {
+                InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
+                Bitmap takenImage = BitmapFactory.decodeStream(inputStream);
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 400);
+                // Load the taken image into a preview
+                ImageView ivProfile = (ImageView) findViewById(R.id.ivProfile);
+                ivProfile.setImageBitmap(resizedBitmap);
+
+                //Convert bitmap to byte array
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                byte[] bitmapData = bos.toByteArray();
+                final ParseFile parseFile = new ParseFile("profile.jpg", bitmapData);
+
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    Log.d("MainActivity", "bos.close() failed.");
+                    e.printStackTrace();
+                }
+
+                parseFile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.d("MainActivity", "Profile image save successful!");
+                            user.put("image", parseFile);
+                            user.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Log.d("Main", "works");
+                                    }
+                                }
+                            });
+                        } else {
+                            Log.e("MainActivity", "Profile image save failed.");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void replaceFragment(Fragment f) {
@@ -174,5 +231,14 @@ public class MainActivity extends AppCompatActivity
 
     public void onBackSelected() {
         replaceFragment(home);
+    }
+
+    public static final int PICK_IMAGE = 1;
+
+    public void loadPicture() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
 }

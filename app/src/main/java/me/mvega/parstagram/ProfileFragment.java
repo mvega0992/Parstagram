@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -20,7 +20,7 @@ import com.parse.ParseUser;
 public class ProfileFragment extends Fragment {
 
     private OnItemSelectedListener listener;
-
+    ParseUser user = ParseUser.getCurrentUser();
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -38,15 +38,13 @@ public class ProfileFragment extends Fragment {
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
 
         Button btnLogOut = (Button) view.findViewById(R.id.btnLogOut);
-        ImageView ivProfile = (ImageView) view.findViewById(R.id.ivProfile);
+        ImageButton ivProfile = (ImageButton) view.findViewById(R.id.ivProfile);
         TextView tvUsername = (TextView) view.findViewById(R.id.tvUsername);
-
-        ParseUser user = ParseUser.getCurrentUser();
 
         tvUsername.setText(user.getUsername());
 
         ParseFile profileImage = user.getParseFile("image");
-        if(profileImage != null) {
+        if (profileImage != null) {
             String imageUrl = profileImage.getUrl();
             Glide.with(getContext()).load(imageUrl).into(ivProfile);
         } else ivProfile.setImageResource(R.drawable.profile_image);
@@ -64,6 +62,13 @@ public class ProfileFragment extends Fragment {
                 });
             }
         });
+
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.loadPicture();
+            }
+        });
     }
 
     public static ProfileFragment newInstance() {
@@ -74,6 +79,7 @@ public class ProfileFragment extends Fragment {
 
     public interface OnItemSelectedListener {
         void onLogOutSelected();
+        void loadPicture();
     }
 
     @Override
@@ -85,5 +91,10 @@ public class ProfileFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement ProfileFragment.OnItemSelectedListener");
         }
+    }
+
+    public void changeImage(ParseFile parseFile) {
+        user.remove("image");
+        user.put("image", parseFile);
     }
 }

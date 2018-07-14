@@ -153,8 +153,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
             try {
                 InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
@@ -170,7 +169,7 @@ public class SignUpActivity extends AppCompatActivity {
                 byte[] bitmapData = bos.toByteArray();
                 file = new ParseFile("profile.jpg", bitmapData);
 
-                try{
+                try {
                     bos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
