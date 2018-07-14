@@ -3,7 +3,6 @@ package me.mvega.parstagram;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,11 +51,9 @@ public class ProfileFragment extends Fragment {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("ProfileFragment", "Log out button clicked!");
                 ParseUser.logOutInBackground(new LogOutCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Log.d("ProfileFragment", "Log out done!");
                         listener.onLogOutSelected();
                     }
                 });
@@ -79,6 +76,7 @@ public class ProfileFragment extends Fragment {
 
     public interface OnItemSelectedListener {
         void onLogOutSelected();
+
         void loadPicture();
     }
 

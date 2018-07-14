@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,12 +99,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void done(List<Post> newPosts, ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < newPosts.size(); ++i) {
-                        Log.d("MainActivity", "Post[" + i + "] = "
-                                + newPosts.get(i).getDescription()
-                                + "\nusername = " + newPosts.get(i).getUser().getUsername());
-
-                    }
                     // Remember to CLEAR OUT old items before appending in the new ones
                     postAdapter.clear();
                     // ...the data has come back, add new items to your adapter...
@@ -119,8 +112,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-
 
     public interface HomeFragmentListener {
         void sendPostToMainActivity(Post post);

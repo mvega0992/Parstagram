@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -88,13 +87,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showProfile() {
-        Log.d("MainActivity", "Click on Profile button recorded!");
         profile = ProfileFragment.newInstance();
         replaceFragment(profile);
     }
 
     public void showCamera() {
-        Log.d("MainActivity", "Click on Camera button recorded!");
         camera = CameraFragment.newInstance();
         replaceFragment(camera);
 
@@ -118,7 +115,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showHome() {
-        Log.d("MainActivity", "Click on Home button recorded!");
         home = HomeFragment.newInstance();
         replaceFragment(home);
     }
@@ -129,11 +125,6 @@ public class MainActivity extends AppCompatActivity
         // Use `getExternalFilesDir` on Context to access package-specific directories.
         // This way, we don't need to request external read/write runtime permissions.
         File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-            Log.d(APP_TAG, "failed to create directory");
-        }
 
         // Return the file target for the photo based on filename
         File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
@@ -173,7 +164,6 @@ public class MainActivity extends AppCompatActivity
                 try {
                     bos.close();
                 } catch (IOException e) {
-                    Log.d("MainActivity", "bos.close() failed.");
                     e.printStackTrace();
                 }
 
@@ -181,18 +171,16 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            Log.d("MainActivity", "Profile image save successful!");
                             user.put("image", parseFile);
                             user.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    if (e == null) {
-                                        Log.d("Main", "works");
+                                    if (e != null) {
+                                        e.printStackTrace();
                                     }
                                 }
                             });
                         } else {
-                            Log.e("MainActivity", "Profile image save failed.");
                             e.printStackTrace();
                         }
                     }

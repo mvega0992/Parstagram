@@ -7,7 +7,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -131,10 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
             user.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if (e == null) {
-                        Log.d("SignUpActivity", "User save successful!");
-                    } else {
-                        Log.e("SignUpActivity", "User save failed.");
+                    if (e != null) {
                         e.printStackTrace();
                     }
                 }
@@ -150,10 +146,7 @@ public class SignUpActivity extends AppCompatActivity {
             user.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if (e == null) {
-                        Log.d("SignUpActivity", "User save successful!");
-                    } else {
-                        Log.e("SignUpActivity", "User save failed.");
+                    if (e != null) {
                         e.printStackTrace();
                     }
                 }
@@ -163,12 +156,10 @@ public class SignUpActivity extends AppCompatActivity {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.d("SignUpActivity", "Sign Up successful!");
                     final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Log.e("SignUpActivity", "Sign Up Failure.");
                     Toast.makeText(SignUpActivity.this, "Sign up failed.", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
@@ -211,10 +202,7 @@ public class SignUpActivity extends AppCompatActivity {
                 file.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e == null) {
-                            Log.d("SignUpActivity", "Profile image save successful!");
-                        } else {
-                            Log.e("SignUpActivity", "Profile image save failed.");
+                        if (e != null) {
                             e.printStackTrace();
                         }
                     }

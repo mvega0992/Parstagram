@@ -3,7 +3,6 @@ package me.mvega.parstagram;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,8 +103,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             if (position != RecyclerView.NO_POSITION) {
                 // get the post at the position, this won't work if the class is static
                 Post post = mPosts.get(position);
-
-                Log.d("PostAdapter", "Post for Details fragment obtained.");
 
                 listener.sendPostToHomeFragment(post);
             }

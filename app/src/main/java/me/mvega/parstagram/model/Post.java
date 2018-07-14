@@ -38,7 +38,9 @@ public class Post extends ParseObject {
         put(KEY_USER, user);
     }
 
-    public Date getTimestamp() { return getCreatedAt(); }
+    public Date getTimestamp() {
+        return getCreatedAt();
+    }
 
     public static class Query extends ParseQuery<Post> {
         public Query() {
@@ -55,7 +57,7 @@ public class Post extends ParseObject {
             return this;
         }
 
-        public Query withUser(){
+        public Query withUser() {
             include("user");
             return this;
         }

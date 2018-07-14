@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +47,6 @@ public class CameraFragment extends Fragment {
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("CameraFragment", "Post button clicked!");
-
                 final String description = etCaption.getText().toString();
                 final ParseUser user = ParseUser.getCurrentUser();
 
@@ -68,10 +65,8 @@ public class CameraFragment extends Fragment {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            Log.d("MainActivity", "Create post success!");
                             listener.onPostSelected();
                         } else {
-                            Log.e("MainActivity", "Create post FAILED!");
                             e.printStackTrace();
                         }
                     }

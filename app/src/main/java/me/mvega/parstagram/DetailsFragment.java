@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,13 +62,13 @@ public class DetailsFragment extends Fragment {
         tvTimestamp.setText(createdAt.toString());
 
         ParseFile picture = post.getImage();
-        if(picture != null) {
+        if (picture != null) {
             String imageUrl = picture.getUrl();
             Glide.with(getContext()).load(imageUrl).into(ivPost);
         } else ivPost.setImageResource(R.drawable.image_placeholder);
 
         ParseFile profileImage = user.getParseFile("image");
-        if(profileImage != null) {
+        if (profileImage != null) {
             String imageUrl = profileImage.getUrl();
             Glide.with(getContext()).load(imageUrl).into(ivProfile);
         } else ivProfile.setImageResource(R.drawable.profile_image);
@@ -77,7 +76,6 @@ public class DetailsFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("DetailsFragment", "Back button clicked!");
                 listener.onBackSelected();
             }
         });
